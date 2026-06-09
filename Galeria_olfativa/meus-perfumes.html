@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Originais & Inspirados — Coleção de Perfumes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     COMO ADICIONAR / TROCAR FOTOS:
+     1. Crie uma pasta "imagens" ao lado deste arquivo HTML.
+     2. Coloque suas fotos la (ex: bonbon.jpg, sweet-fruity-juice.jpg).
+     3. La embaixo, na lista ORIGINAIS (no <script>), edite os itens.
+        - "foto"        = arquivo do perfume ORIGINAL (foto grande)
+        - "inspirados"  = lista de ate 3 contratipos; cada um tem
+                          nome, marca e "foto" (arquivo dentro de imagens)
+     Sem foto ainda? Aparece um espaco elegante com o nome --
+     e so soltar a imagem na pasta depois.
+     ============================================================ */
+
+  :root{
+    --bg:#f3eefa;
+    --bg-deep:#e7dcf5;
+    --ink:#2e2440;
+    --ink-soft:#6f6385;
+    --lilac:#9b6fd4;
+    --lilac-deep:#7c4fc0;
+    --lilac-soft:#c9aef0;
+    --line:#dccdf0;
+    --card:#fcf9ff;
+    --accent:#b0568f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(circle at 14% 6%, rgba(155,111,212,.14), transparent 42%),
+      radial-gradient(circle at 86% 96%, rgba(176,86,143,.10), transparent 46%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Jost',sans-serif;font-weight:300;line-height:1.6;
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;opacity:.7;
+  }
+
+  header{
+    position:relative;z-index:1;text-align:center;
+    padding:5.5rem 1.5rem 2.5rem;border-bottom:1px solid var(--line);
+    max-width:1200px;margin:0 auto;
+  }
+  .kicker{font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--lilac-deep);font-weight:500;margin-bottom:1.4rem}
+  header h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.5rem,7vw,4.8rem);line-height:.98;letter-spacing:-.01em}
+  header h1 em{font-style:italic;color:var(--accent)}
+  .sub{margin-top:1.3rem;color:var(--ink-soft);font-size:1.02rem;max-width:32rem;margin-left:auto;margin-right:auto}
+  .rule{width:60px;height:1px;background:var(--lilac);margin:2.2rem auto 0;position:relative}
+  .rule::before,.rule::after{content:"";position:absolute;top:50%;width:5px;height:5px;background:var(--lilac);border-radius:50%;transform:translateY(-50%)}
+  .rule::before{left:-14px}.rule::after{right:-14px}
+
+  .filters{position:relative;z-index:1;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;padding:2.2rem 1.5rem .5rem;max-width:1200px;margin:0 auto}
+  .filters button{font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:400;background:transparent;color:var(--ink-soft);border:1px solid var(--line);border-radius:40px;padding:.55rem 1.3rem;cursor:pointer;transition:all .25s ease}
+  .filters button:hover{border-color:var(--lilac);color:var(--ink)}
+  .filters button.active{background:var(--lilac-deep);color:#fff;border-color:var(--lilac-deep)}
+
+  main{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:2.5rem 1.5rem 6rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(46,36,64,.05);transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease;opacity:0;transform:translateY(24px);animation:rise .7s forwards cubic-bezier(.2,.8,.2,1)}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .card:hover{transform:translateY(-6px);box-shadow:0 22px 48px -22px rgba(124,79,192,.45)}
+
+  .orig-tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;padding:.7rem 1.2rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;color:var(--ink-soft)}
+  .orig-tag .fam{color:var(--lilac-deep);font-weight:400;letter-spacing:.16em}
+
+  .hero-img{position:relative;width:100%;aspect-ratio:1/1;background:linear-gradient(160deg,var(--bg-deep),#d7c4ef);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .hero-img img{width:100%;height:100%;object-fit:contain;display:block;padding:1rem}
+  .orig-badge{position:absolute;top:.9rem;left:.9rem;background:rgba(46,36,64,.82);color:#fff;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:.35rem .7rem;border-radius:30px;backdrop-filter:blur(4px)}
+  .ph{text-align:center;padding:1rem;color:var(--ink-soft)}
+  .ph .ph-icon{font-family:'Fraunces',serif;font-size:2.6rem;color:var(--lilac);opacity:.55}
+  .ph .ph-name{font-family:'Fraunces',serif;font-style:italic;font-size:1.15rem;margin-top:.3rem}
+  .ph .ph-hint{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;margin-top:.5rem;opacity:.7}
+
+  .body{padding:1.4rem 1.4rem 1.6rem;display:flex;flex-direction:column;flex:1}
+  .orig-name{font-family:'Fraunces',serif;font-weight:400;font-size:1.85rem;line-height:1.02;letter-spacing:-.01em}
+  .orig-house{color:var(--ink-soft);font-size:.9rem;letter-spacing:.04em;margin-top:.15rem}
+
+  .notes{margin-top:1.1rem;display:flex;flex-direction:column;gap:.6rem}
+  .note-row{display:grid;grid-template-columns:62px 1fr;gap:.7rem;align-items:start}
+  .note-tier{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lilac-deep);font-weight:500;padding-top:.18rem}
+  .note-vals{font-size:.88rem;color:var(--ink);line-height:1.5}
+
+  .insp-block{margin-top:1.3rem;padding-top:1.1rem;border-top:1px dashed var(--line)}
+  .insp-head{font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lilac-deep);font-weight:600;margin-bottom:.85rem}
+  .insp-list{display:flex;gap:.7rem}
+  .insp-item{flex:1;min-width:0;text-align:center}
+  .insp-thumb{width:100%;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:linear-gradient(160deg,var(--bg-deep),#d7c4ef);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:.4rem}
+  .insp-thumb img{width:100%;height:100%;object-fit:cover}
+  .insp-thumb .mini-ph{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--lilac);opacity:.55}
+  .insp-nome{font-family:'Fraunces',serif;font-size:.92rem;line-height:1.15;color:var(--ink)}
+  .insp-marca{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-top:.15rem}
+  .insp-item{position:relative}
+  .del-insp{position:absolute;top:.2rem;right:.2rem;background:rgba(46,36,64,.7);border:none;border-radius:50%;width:1.2rem;height:1.2rem;font-size:.6rem;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+  .insp-item:hover .del-insp{opacity:1}
+  .tenho-btn{margin-top:.45rem;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;border:1px solid var(--line);border-radius:30px;padding:.28rem .7rem;cursor:pointer;background:transparent;color:var(--ink-soft);transition:all .2s ease;display:inline-block}
+  .tenho-btn:hover{border-color:var(--lilac);color:var(--ink)}
+  .tenho-btn.tenho{background:var(--lilac-deep);color:#fff;border-color:var(--lilac-deep)}
+  .tenho-orig{position:absolute;bottom:.8rem;right:.8rem;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;border:1px solid rgba(255,255,255,.4);border-radius:30px;padding:.28rem .75rem;cursor:pointer;background:rgba(46,36,64,.72);color:rgba(255,255,255,.8);backdrop-filter:blur(4px);transition:all .2s ease;z-index:2}
+  .tenho-orig:hover{background:rgba(46,36,64,.9);color:#fff}
+  .tenho-orig.tenho{background:var(--lilac-deep);color:#fff;border-color:var(--lilac-deep)}
+  .insp-vazio{flex:0 0 auto;width:calc(33.33% - .5rem);border:1px dashed var(--line);border-radius:4px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;color:var(--lilac-soft);font-size:1.4rem;cursor:pointer;transition:border-color .2s,color .2s}
+  .insp-vazio:hover{border-color:var(--lilac);color:var(--lilac)}
+  .insp-add-form{flex:0 0 auto;width:calc(33.33% - .5rem);border:1px dashed var(--lilac);border-radius:4px;padding:.55rem .45rem;display:flex;flex-direction:column;gap:.35rem;background:var(--bg)}
+  .insp-add-form input{font-family:'Jost',sans-serif;font-size:.7rem;border:1px solid var(--line);border-radius:4px;padding:.3rem .45rem;width:100%;background:var(--card);color:var(--ink);outline:none;box-sizing:border-box}
+  .insp-add-form input:focus{border-color:var(--lilac)}
+  .insp-add-form input::placeholder{color:var(--lilac-soft)}
+  .insp-add-btns{display:flex;gap:.3rem;margin-top:.1rem}
+  .insp-add-btns button{flex:1;font-size:.58rem;padding:.3rem 0;border-radius:20px;border:none;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+  .btn-add-ok{background:var(--lilac-deep);color:#fff}
+  .btn-add-cancel{background:var(--line);color:var(--ink-soft)}
+
+  /* botão flutuante adicionar perfume */
+  .fab{position:fixed;bottom:2rem;right:2rem;z-index:100;width:3.2rem;height:3.2rem;border-radius:50%;background:var(--lilac-deep);color:#fff;border:none;font-size:1.6rem;line-height:1;cursor:pointer;box-shadow:0 4px 18px rgba(124,79,192,.45);transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center}
+  .fab:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(124,79,192,.55)}
+
+  /* modal novo perfume */
+  .modal-overlay{position:fixed;inset:0;background:rgba(46,36,64,.55);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
+  .modal-overlay.oculto{display:none}
+  .modal{background:var(--card);border:1px solid var(--line);border-radius:8px;width:100%;max-width:460px;padding:2rem 1.8rem;display:flex;flex-direction:column;gap:.9rem;max-height:90vh;overflow-y:auto}
+  .modal h3{font-family:'Fraunces',serif;font-weight:400;font-size:1.5rem;color:var(--ink);margin-bottom:.2rem}
+  .modal label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lilac-deep);font-weight:500;display:block;margin-bottom:.3rem}
+  .modal input,.modal textarea{font-family:'Jost',sans-serif;font-size:.85rem;border:1px solid var(--line);border-radius:5px;padding:.5rem .7rem;width:100%;background:var(--bg);color:var(--ink);outline:none;box-sizing:border-box;resize:none}
+  .modal input:focus,.modal textarea:focus{border-color:var(--lilac)}
+  .modal input::placeholder,.modal textarea::placeholder{color:var(--lilac-soft)}
+  .modal-btns{display:flex;gap:.6rem;margin-top:.4rem}
+  .modal-btns button{flex:1;padding:.6rem;border-radius:30px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+  .btn-modal-ok{background:var(--lilac-deep);color:#fff}
+  .btn-modal-cancel{background:var(--line);color:var(--ink-soft)}
+
+  footer{position:relative;z-index:1;text-align:center;padding:2.5rem 1.5rem 4rem;color:var(--ink-soft);font-size:.8rem;letter-spacing:.04em;border-top:1px solid var(--line);max-width:1200px;margin:0 auto}
+  footer em{font-family:'Fraunces',serif}
+  .empty{grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--ink-soft);font-family:'Fraunces',serif;font-style:italic;font-size:1.3rem}
+
+  .fav-btn{position:absolute;top:.8rem;right:.8rem;background:rgba(46,36,64,.72);border:none;border-radius:50%;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:transform .2s ease,background .2s ease;z-index:2;font-size:1rem;line-height:1;color:#fff;opacity:.7}
+  .fav-btn:hover{transform:scale(1.15);opacity:1}
+  .fav-btn.ativo{background:var(--accent);opacity:1;color:#fff}
+  .card.favorito{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Originais &amp; seus Contratipos</div>
+  <h1>Galeria <em>Olfativa da Lavi</em></h1>
+  <p class="sub">A fragrância original em destaque e seus inspirados</p>
+  <div class="rule"></div>
+</header>
+
+<nav class="filters" id="filtros"></nav>
+
+<main id="grade"></main>
+
+<footer>
+  Colecao pessoal. As <em>inspiracoes olfativas</em> sao referencias de direcao criativa &mdash; sem vinculo com as marcas originais citadas.
+</footer>
+
+<button class="fab" id="btnAddPerf" title="Adicionar perfume">+</button>
+
+<div class="modal-overlay oculto" id="modalPerf">
+  <div class="modal">
+    <h3>Novo Perfume</h3>
+    <div><label>Nome do original</label><input id="mp-nome" type="text" placeholder="Ex: Mon Guerlain"></div>
+    <div><label>Casa / Marca</label><input id="mp-casa" type="text" placeholder="Ex: GUERLAIN"></div>
+    <div><label>Família olfativa</label><input id="mp-familia" type="text" placeholder="Ex: Floral Oriental"></div>
+    <div><label>Notas de saída</label><input id="mp-saida" type="text" placeholder="Ex: Lavanda, Bergamota"></div>
+    <div><label>Notas de corpo</label><input id="mp-corpo" type="text" placeholder="Ex: Jasmim, Iris"></div>
+    <div><label>Notas de fundo</label><input id="mp-fundo" type="text" placeholder="Ex: Baunilha, Musk"></div>
+    <div><label>URL da foto (opcional)</label><input id="mp-foto" type="text" placeholder="https://..."></div>
+    <div class="modal-btns">
+      <button class="btn-modal-ok" id="mp-ok">Salvar</button>
+      <button class="btn-modal-cancel" id="mp-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   SUA LISTA -- organizada por PERFUME ORIGINAL.
+
+   Cada item:
+   - original   : nome do perfume original (foto grande)
+   - casa       : marca do original
+   - familia    : familia olfativa
+   - foto       : arquivo do original na pasta "imagens" (ou "")
+   - notas      : { saida, corpo, fundo }
+   - inspirados : lista de ate 3 contratipos. Cada um:
+                  { nome, marca, foto }   (foto = arquivo ou "")
+   ════════════════════════════════════════════════════════════ */
+
+const ORIGINAIS = [
+  /* ── PARES: original + inspirado(s) ── */
+  {
+    original:"Bonbon", casa:"Viktor & Rolf", familia:"Floral Frutado Gourmand",
+    foto:"bonbon.avif",
+    notas:{
+      saida:"Pessego, Tangerina, Laranja",
+      corpo:"Caramelo, Flor de Laranjeira, Jasmim",
+      fundo:"Madeira Guaiac, Ambar, Sandalo, Cedro"
+    },
+    inspirados:[
+      { nome:"Sweet Fruity Juice", marca:"IN THE BOX", foto:"sweet-fruity-juice.avif" }
+    ]
+  },
+  {
+    original:"Chance Eau Splendide", casa:"Chanel", familia:"Floral Frutado",
+    foto:"chance-eau-splendide.avif",
+    notas:{
+      saida:"Frutas Vermelhas, Framboesa, Pessego, Rosa, Violeta",
+      corpo:"Iris, Geranio Rosa",
+      fundo:"Musk Branco, Cedro"
+    },
+    inspirados:[
+      { nome:"Soft Splendor", marca:"IN THE BOX", foto:"soft-splendor.jpg" }
+    ]
+  },
+  {
+    original:"Safanad", casa:"Parfums de Marly", familia:"Floral Oriental",
+    foto:"safanad.avif",
+    notas:{
+      saida:"Laranja, Pera, Petitgrain",
+      corpo:"Ylang-Ylang, Flor de Laranjeira, Jasmim Sambac",
+      fundo:"Ambar, Baunilha, Sandalo"
+    },
+    inspirados:[
+      { nome:"La Belle Fleur", marca:"IN THE BOX", foto:"la-belle-fleur.avif" }
+    ]
+  },
+  {
+    original:"Good Girl", casa:"Carolina Herrera", familia:"Ambar Floral",
+    foto:"good-girl.avif",
+    notas:{
+      saida:"Amendoa, Cafe, Bergamota",
+      corpo:"Jasmim Sambac, Tuberosa",
+      fundo:"Fava Tonka, Cacau, Baunilha, Praline"
+    },
+    inspirados:[
+      { nome:"Bad Girl", marca:"IN THE BOX", foto:"bad-girl.jpg" }
+    ]
+  },
+  {
+    original:"Good Girl Blush", casa:"Carolina Herrera", familia:"Chypre Floral",
+    foto:"good-girl-blush.avif",
+    notas:{
+      saida:"Amendoa Amarga, Bergamota, Tangerina",
+      corpo:"Peonia, Ylang-Ylang, Agua de Rosa",
+      fundo:"Fava Tonka, Baunilha"
+    },
+    inspirados:[
+      { nome:"Radiant Girl Blush", marca:"Primacial", foto:"radiant-girl-blush.webp" }
+    ]
+  },
+  {
+    original:"Poison Girl", casa:"Dior", familia:"Oriental Amadeirado Doce",
+    foto:"poison-girl.avif",
+    notas:{
+      saida:"Laranja Doce, Limao Siciliano",
+      corpo:"Rosa de Grasse, Rosa Damascena",
+      fundo:"Baunilha, Fava Tonka, Amendoa Amarga, Patchouli"
+    },
+    inspirados:[
+      { nome:"Very Dangerous", marca:"IN THE BOX", foto:"very-dangerous.avif" }
+    ]
+  },
+  {
+    original:"Dior Addict", casa:"Dior", familia:"Ambar Floral",
+    foto:"dior-addict.avif",
+    notas:{
+      saida:"Amora, Folha de Tangerina",
+      corpo:"Jasmim, Flor de Laranjeira, Rosa",
+      fundo:"Baunilha, Fava Tonka, Sandalo"
+    },
+    inspirados:[
+      { nome:"Addope", marca:"IN THE BOX", foto:"addope.avif" }
+    ]
+  },
+  {
+    original:"Miss Dior Chérie", casa:"Dior", familia:"Chypre Frutado",
+    foto:"miss-dior-cherie.avif",
+    notas:{
+      saida:"Cereja, Morango, Abacaxi, Tangerina",
+      corpo:"Pipoca, Caramelo, Rosa, Jasmim, Violeta",
+      fundo:"Patchouli, Musk, Ambar"
+    },
+    inspirados:[
+      { nome:"Miss Sunshine", marca:"LAB 8", foto:"miss-sunshine.webp" }
+    ]
+  },
+  {
+    original:"Angel", casa:"Thierry Mugler", familia:"Oriental Gourmand",
+    foto:"angel.avif",
+    notas:{
+      saida:"Bergamota, Melao, Tangerina, Abacaxi",
+      corpo:"Mel, Frutas Vermelhas, Praline",
+      fundo:"Baunilha, Caramelo, Patchouli, Chocolate"
+    },
+    inspirados:[
+      { nome:"Angeline", marca:"LAB 8", foto:"angeline.webp" },
+      { nome:"The Night", marca:"LAB 8", foto:"the-night.webp" }
+    ]
+  },
+  {
+    original:"Angel Fantasm", casa:"Thierry Mugler", familia:"Floral Frutado Gourmand",
+    foto:"angel-fantasm.avif",
+    notas:{
+      saida:"Abacaxi, Bergamota",
+      corpo:"Coco, Flor de Tiare",
+      fundo:"Patchouli, Baunilha Bourbon, Ambar"
+    },
+    inspirados:[
+      { nome:"Celestial Fantasy", marca:"IN THE BOX", foto:"celestial-fantasy.avif" }
+    ]
+  },
+  {
+    original:"Valentino Donna Born in Roma", casa:"Valentino", familia:"Floriental Ambar",
+    foto:"valentino-donna-born-in-roma.avif",
+    notas:{
+      saida:"Groselha Negra, Pimenta Rosa, Bergamota",
+      corpo:"Jasmim Sambac, Cha de Jasmim",
+      fundo:"Baunilha Bourbon, Cashmeran, Madeira Guaiac"
+    },
+    inspirados:[
+      { nome:"Donatella", marca:"LAB 8", foto:"donatella.webp" }
+    ]
+  },
+  {
+    original:"Prada Paradoxe", casa:"Prada", familia:"Floral Fresco",
+    foto:"prada-paradoxe.avif",
+    notas:{
+      saida:"Pera, Tangerina, Bergamota",
+      corpo:"Flor de Laranjeira, Neroli, Jasmim Sambac",
+      fundo:"Baunilha Bourbon, Musk Branco, Ambar, Benjoim"
+    },
+    inspirados:[
+      { nome:"My Duality", marca:"IN THE BOX", foto:"my-duality.avif" },
+      { nome:"Enigma Perfeito", marca:"LAB 8", foto:"enigma-perfeito.webp" }
+    ]
+  },
+  {
+    original:"Queen of Silk", casa:"Creed", familia:"Ambar Floral",
+    foto:"queen-of-silk.avif",
+    notas:{
+      saida:"Osmanthus, Magnolia, Acafrao",
+      corpo:"Tuberosa, Maracuja, Oud, Patchouli Javanes",
+      fundo:"Baunilha de Madagascar, Incenso, Mirra, Ambroxan, Cedro, Musk"
+    },
+    inspirados:[
+      { nome:"Aisha Queen", marca:"Bidaya", foto:"aisha-queen.avif" },
+      { nome:"Fine Silk", marca:"IN THE BOX", foto:"fine-silk.jpg" }
+    ]
+  },
+  {
+    original:"Scandal Absolu", casa:"Jean Paul Gaultier", familia:"Floral Oriental",
+    foto:"scandal-absolu.avif",
+    notas:{
+      saida:"Tuberosa",
+      corpo:"Figo Negro",
+      fundo:"Sandalo, Patchouli, Ambar"
+    },
+    inspirados:[
+      { nome:"Totally Scandal", marca:"IN THE BOX", foto:"totally-scandal.jpg" }
+    ]
+  },
+  {
+    original:"Erba Pura", casa:"Xerjoff", familia:"Oriental Frutado",
+    foto:"erba-pura.avif",
+    notas:{
+      saida:"Laranja Siciliana, Bergamota Calabresa, Limao Siciliano",
+      corpo:"Mix de Frutas Mediterraneas",
+      fundo:"Musk Branco, Baunilha de Madagascar, Ambar"
+    },
+    inspirados:[
+      { nome:"Philos Pura", marca:"Maison Alhambra", foto:"philos-pura.avif" }
+    ]
+  },
+  {
+    original:"Bright Crystal", casa:"Versace", familia:"Floral Frutado",
+    foto:"bright-crystal.avif",
+    notas:{
+      saida:"Yuzu, Roma, Gelo",
+      corpo:"Peonia, Lotus, Magnolia",
+      fundo:"Musk, Mogno, Ambar"
+    },
+    inspirados:[]
+  },
+
+  /* ── SEM INSPIRADO CONFIRMADO ── */
+  {
+    original:"Scandal by Night", casa:"Jean Paul Gaultier", familia:"Floral Oriental",
+    foto:"scandal-by-night.avif",
+    notas:{
+      saida:"Mel, Laranja Amarga, Citrico",
+      corpo:"Cereja, Tuberosa, Flor de Laranjeira, Pera",
+      fundo:"Fava Tonka, Baunilha, Patchouli, Sandalo, Musk"
+    },
+    inspirados:[
+      { nome:"Scandalous Night", marca:"IN THE BOX", foto:"scandalous-night.jpg" }
+    ]
+  },
+  {
+    original:"Scandal Le Parfum", casa:"Jean Paul Gaultier", familia:"Floral Oriental",
+    foto:"scandal-le-parfum.avif",
+    notas:{
+      saida:"Jasmim",
+      corpo:"Caramelo Salgado",
+      fundo:"Baunilha, Sandalo"
+    },
+    inspirados:[]
+  },
+  {
+    original:"La Belle", casa:"Jean Paul Gaultier", familia:"Oriental Baunilha",
+    foto:"la-belle.avif",
+    notas:{
+      saida:"Pera, Bergamota",
+      corpo:"Notas Florais, Couro",
+      fundo:"Baunilha, Vetiver, Ambar, Musk"
+    },
+    inspirados:[]
+  },
+  {
+    original:"La Belle Paradise Garden", casa:"Jean Paul Gaultier", familia:"Floral",
+    foto:"la-belle-paradise-garden.avif",
+    notas:{
+      saida:"Lotus Azul",
+      corpo:"Iris",
+      fundo:"Baunilha, Sandalo"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Miss Dior EDP", casa:"Dior", familia:"Floral",
+    foto:"miss-dior-edp.avif",
+    notas:{
+      saida:"Rosa Damascena Bulgara, Rosa Absoluta de Grasse",
+      corpo:"Peonia, Lirio do Vale",
+      fundo:"Sandalo do Sri Lanka, Iris"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Miss Dior Parfum", casa:"Dior", familia:"Floral Frutado Amadeirado",
+    foto:"miss-dior-parfum.avif",
+    notas:{
+      saida:"Damasco, Pessego, Tangerina",
+      corpo:"Morango Silvestre, Jasmim, Notas Florais",
+      fundo:"Patchouli, Madeira Ambar, Ambar, Cedro Atlas"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Miss Dior Essence", casa:"Dior", familia:"Chypre Floral",
+    foto:"miss-dior-essence.avif",
+    notas:{
+      saida:"Amora, Sabugueiro",
+      corpo:"Jasmim Sambac, Jasmim",
+      fundo:"Notas Amadeiradas, Carvalho"
+    },
+    inspirados:[]
+  },
+  {
+    original:"La Nuit Trésor", casa:"Lancôme", familia:"Floral Oriental Gourmand",
+    foto:"la-nuit-tresor.avif",
+    notas:{
+      saida:"Framboesa, Lichia, Bergamota",
+      corpo:"Rosa, Incenso",
+      fundo:"Baunilha Tahitiana, Patchouli"
+    },
+    inspirados:[]
+  },
+  {
+    original:"La Nuit Trésor Nude", casa:"Lancôme", familia:"Floral Oriental",
+    foto:"la-nuit-tresor-nude.avif",
+    notas:{
+      saida:"Bergamota",
+      corpo:"Rosa",
+      fundo:"Baunilha, Coco"
+    },
+    inspirados:[]
+  },
+  {
+    original:"La Vie Est Belle Elixir", casa:"Lancôme", familia:"Floral Frutado Gourmand",
+    foto:"la-vie-est-belle-elixir.avif",
+    notas:{
+      saida:"Framboesa, Licor, Bergamota Calabresa",
+      corpo:"Folha de Violeta, Rosa",
+      fundo:"Couro, Manteiga de Cacau, Cedro"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Ange ou Démon", casa:"Givenchy", familia:"Floral Oriental",
+    foto:"ange-ou-demon.avif",
+    notas:{
+      saida:"Acafrao, Tomilho, Tangerina",
+      corpo:"Lirio, Ylang-Ylang, Orquidea",
+      fundo:"Baunilha, Fava Tonka, Mogno, Musgo de Carvalho"
+    },
+    inspirados:[]
+  },
+  {
+    original:"L'Interdit Eau de Parfum Rouge", casa:"Givenchy", familia:"Ambar Floral",
+    foto:"l-interdit-rouge.avif",
+    notas:{
+      saida:"Laranja Sanguinea, Gengibre",
+      corpo:"Flor de Laranjeira, Jasmim",
+      fundo:"Patchouli, Sandalo"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Power of You", casa:"Giorgio Armani", familia:"Floral Frutado Gourmand",
+    foto:"power-of-you.avif",
+    notas:{
+      saida:"Maracuja, Laranja Amarga, Limao",
+      corpo:"Frangipani, Notas Solares",
+      fundo:"Baunilha de Madagascar, Benjoim, Labdano"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Sweet Tooth Caramel Dream", casa:"Sabrina Carpenter", familia:"Oriental Baunilha",
+    foto:"sweet-tooth-caramel-dream.avif",
+    notas:{
+      saida:"Acucar, Leite de Amendoa, Laranja, Freesia, Limao",
+      corpo:"Chocolate Amargo, Baunilha, Flor de Laranjeira, Orquidea",
+      fundo:"Caramelo, Patchouli, Sandalo, Musk, Ambar"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Amorous", casa:"Borouj", familia:"Oriental",
+    foto:"amorous.avif",
+    notas:{
+      saida:"Avela, Frutas Vermelhas",
+      corpo:"Especiarias, Propolis, Acucar",
+      fundo:"Ambar, Baunilha, Musk, Musgo"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Royal Amber Premium", casa:"Orientica", familia:"Oriental Baunilha",
+    foto:"royal-amber-premium.avif",
+    notas:{
+      saida:"Bergamota, Notas Verdes",
+      corpo:"Notas Doces, Melao, Abacaxi, Ambar",
+      fundo:"Musk, Notas Amadeiradas, Baunilha"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Eclaire", casa:"Lattafa", familia:"Floral Frutado Gourmand",
+    foto:"eclaire.avif",
+    notas:{
+      saida:"Caramelo, Leite, Acucar",
+      corpo:"Mel, Flores Brancas",
+      fundo:"Baunilha, Praline, Musk"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Euphoria Sensuale", casa:"IN THE BOX", familia:"Floral Oriental",
+    foto:"euphoria-sensuale.avif",
+    notas:{
+      saida:"Acai, Toranja, Limao Siciliano",
+      corpo:"Maca, Iris, Rosa, Jasmim Sambac",
+      fundo:"Baunilha, Fava Tonka, Musk, Patchouli, Cedro"
+    },
+    inspirados:[]
+  },
+  {
+    original:"Angel Nova", casa:"Thierry Mugler", familia:"Floral Frutado",
+    foto:"angel-nova.avif",
+    notas:{
+      saida:"Lichia, Framboesa",
+      corpo:"Rosa Damascena",
+      fundo:"Akigalawood, Balsamo"
+    },
+    inspirados:[
+      { nome:"Nouvelle Angélique", marca:"IN THE BOX", foto:"nouvelle-angelique.avif" }
+    ]
+  },
+  {
+    original:"Hypnotic Poison", casa:"Dior", familia:"Ambar Baunilha",
+    foto:"hypnotic-poison.avif",
+    notas:{
+      saida:"Ameixa, Coco, Damasco",
+      corpo:"Jasmim Sambac, Muguet, Rosa, Tuberosa",
+      fundo:"Baunilha, Madeira de Jacaranda, Sandalo"
+    },
+    inspirados:[
+      { nome:"Crazy Poison", marca:"IN THE BOX", foto:"crazy-poison.jpg" }
+    ]
+  },
+  {
+    original:"Oriana", casa:"Parfums de Marly", familia:"Floral Frutado Gourmand",
+    foto:"oriana.avif",
+    notas:{
+      saida:"Mandarina, Bergamota, Toranja",
+      corpo:"Flor de Laranjeira, Framboesa, Groselha Preta",
+      fundo:"Chantilly, Marshmallow, Musk, Ambreta"
+    },
+    inspirados:[
+      { nome:"Sugarmellow", marca:"IN THE BOX", foto:"sugarmellow.avif" }
+    ]
+  },
+  {
+    original:"So Scandal", casa:"Jean Paul Gaultier", familia:"Floral Frutado",
+    foto:"so-scandal.avif",
+    notas:{
+      saida:"Framboesa, Flor de Laranjeira",
+      corpo:"Tuberosa, Gardenia",
+      fundo:"Musk, Mel"
+    },
+    inspirados:[
+      { nome:"So Screamy", marca:"IN THE BOX", foto:"so-screamy.jpg" },
+      { nome:"So Scandals", marca:"Primacial", foto:"so-scandals.webp" }
+    ]
+  }
+];
+
+const PASTA = "imagens/";
+const MAX_SLOTS = 3;
+
+const grade = document.getElementById("grade");
+const filtros = document.getElementById("filtros");
+
+let FAVS = JSON.parse(localStorage.getItem("laviFavs")||"[]");
+function salvarFavs(){ localStorage.setItem("laviFavs", JSON.stringify(FAVS)); }
+function isFav(nome){ return FAVS.includes(nome); }
+function toggleFav(nome){
+  if(isFav(nome)) FAVS = FAVS.filter(function(f){return f!==nome;});
+  else FAVS.push(nome);
+  salvarFavs();
+}
+
+/* ── formatação automática ── */
+function toTitleCase(s){ return s.toLowerCase().replace(/(^|\s)\S/g,function(c){return c.toUpperCase();}); }
+function toAllCaps(s){ return s.toUpperCase(); }
+function fmtInput(el, fn){ el.addEventListener("blur",function(){ el.value=fn(el.value.trim()); }); }
+
+/* ── inspirados customizados ── */
+let CUSTOM_INSP = JSON.parse(localStorage.getItem("laviCustomInsp")||"{}");
+function salvarCustom(){ localStorage.setItem("laviCustomInsp", JSON.stringify(CUSTOM_INSP)); }
+function getCustom(original){ return CUSTOM_INSP[original]||[]; }
+function addCustom(original, nome, marca, url){
+  if(!CUSTOM_INSP[original]) CUSTOM_INSP[original]=[];
+  CUSTOM_INSP[original].push({nome:nome, marca:marca, foto:url||"", url:!!(url)});
+  salvarCustom();
+}
+function deleteCustom(original, idx){
+  if(CUSTOM_INSP[original]) CUSTOM_INSP[original].splice(idx,1);
+  salvarCustom();
+}
+
+/* ── perfumes customizados ── */
+let CUSTOM_PERF = JSON.parse(localStorage.getItem("laviCustomPerf")||"[]");
+function salvarCustomPerf(){ localStorage.setItem("laviCustomPerf", JSON.stringify(CUSTOM_PERF)); }
+function getTodos(){ return ORIGINAIS.concat(CUSTOM_PERF); }
+
+let TENHO = JSON.parse(localStorage.getItem("laviTenho")||"[]");
+function salvarTenho(){ localStorage.setItem("laviTenho", JSON.stringify(TENHO)); }
+function isTenho(chave){ return TENHO.includes(chave); }
+function toggleTenho(chave){
+  if(isTenho(chave)) TENHO = TENHO.filter(function(t){return t!==chave;});
+  else TENHO.push(chave);
+  salvarTenho();
+}
+
+function inspItem(insp, original, customIdx){
+  const chave = original+"|"+insp.nome;
+  const tenho = isTenho(chave);
+  const isCustom = customIdx !== undefined;
+  const src = insp.foto ? (insp.url ? insp.foto : PASTA+insp.foto) : "";
+  const thumb = src
+    ? '<div class="insp-thumb"><img src="'+src+'" alt="'+insp.nome+'" onerror="this.parentNode.innerHTML=\'<span class=&quot;mini-ph&quot;>&#10038;</span>\'"></div>'
+    : '<div class="insp-thumb"><span class="mini-ph">&#10038;</span></div>';
+  const delBtn = isCustom
+    ? '<button class="del-insp" data-original="'+original+'" data-idx="'+customIdx+'" title="Remover">✕</button>'
+    : '';
+  return '<div class="insp-item">'+delBtn+thumb+
+         '<div class="insp-nome">'+insp.nome+'</div>'+
+         '<div class="insp-marca">'+insp.marca+'</div>'+
+         '<button class="tenho-btn'+(tenho?' tenho':'')+'" data-chave="'+chave+'">'+(tenho?'✓ Tenho':'Tenho?')+'</button>'+
+         '</div>';
+}
+
+function cardHTML(o, i){
+  const heroSrc = o.foto ? (o.foto.startsWith("__url__") ? o.foto.slice(7) : PASTA+o.foto) : "";
+  const heroImg = heroSrc
+    ? '<img src="'+heroSrc+'" alt="'+o.original+'" onerror="this.parentNode.innerHTML=\'<div class=&quot;orig-badge&quot;>Original</div><div class=&quot;ph&quot;><div class=&quot;ph-icon&quot;>&#10086;</div><div class=&quot;ph-name&quot;>'+o.original+'</div><div class=&quot;ph-hint&quot;>adicionar foto</div></div>\'"><div class="orig-badge">Original</div>'
+    : '<div class="orig-badge">Original</div><div class="ph"><div class="ph-icon">&#10086;</div><div class="ph-name">'+o.original+'</div><div class="ph-hint">adicionar foto</div></div>';
+
+  let inspHTML = (o.inspirados||[]).map(function(insp){ return inspItem(insp, o.original); }).join("");
+  inspHTML += getCustom(o.original).map(function(insp,idx){ return inspItem(insp, o.original, idx); }).join("");
+  const todosInsp = (o.inspirados||[]).concat(getCustom(o.original));
+  inspHTML += '<div class="insp-vazio" data-original="'+o.original+'">+</div>';
+
+  const marcas = todosInsp.map(function(x){return x.marca;}).join(" ");
+
+  const fav = isFav(o.original);
+  return '<article class="card'+(fav?' favorito':'')+'" data-nome="'+o.original+'" data-marcas="'+marcas+'" style="animation-delay:'+(i*70)+'ms">'+
+    '<div class="orig-tag"><span>'+o.casa+'</span><span class="fam">'+o.familia+'</span></div>'+
+    '<div class="hero-img">'+heroImg+
+      '<button class="fav-btn'+(fav?' ativo':'')+'" title="Favoritar">★</button>'+
+      '<button class="tenho-orig'+(isTenho("orig|"+o.original)?' tenho':'')+'" data-orig="'+o.original+'">'+(isTenho("orig|"+o.original)?"✓ Tenho":"Tenho?")+'</button>'+
+    '</div>'+
+    '<div class="body">'+
+      '<h2 class="orig-name">'+o.original+'</h2>'+
+      '<div class="orig-house">'+o.casa+'</div>'+
+      '<div class="notes">'+
+        '<div class="note-row"><div class="note-tier">Saida</div><div class="note-vals">'+o.notas.saida+'</div></div>'+
+        '<div class="note-row"><div class="note-tier">Corpo</div><div class="note-vals">'+o.notas.corpo+'</div></div>'+
+        '<div class="note-row"><div class="note-tier">Fundo</div><div class="note-vals">'+o.notas.fundo+'</div></div>'+
+      '</div>'+
+      '<div class="insp-block">'+
+        '<div class="insp-head">Inspirados</div>'+
+        '<div class="insp-list">'+inspHTML+'</div>'+
+      '</div>'+
+    '</div></article>';
+}
+
+let filtroAtivo = "todos";
+
+function render(marca){
+  filtroAtivo = marca;
+  const todos = getTodos();
+  const base = marca==="todos"
+    ? todos
+    : marca==="favoritos"
+    ? todos.filter(function(o){ return isFav(o.original); })
+    : todos.filter(function(o){
+        const insp = (o.inspirados||[]).concat(getCustom(o.original));
+        return insp.some(function(x){return x.marca===marca;});
+      });
+  const lista = base.slice().sort(function(a,b){ return a.original.localeCompare(b.original,"pt"); });
+  grade.innerHTML = lista.length
+    ? lista.map(cardHTML).join("")
+    : '<div class="empty">'+(marca==="favoritos"?"Nenhum favorito ainda. Clique no ★ de um perfume!":"Nada nessa marca ainda.")+'</div>';
+
+  grade.querySelectorAll(".fav-btn").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      const card = btn.closest(".card");
+      const nome = card.dataset.nome;
+      toggleFav(nome);
+      btn.classList.toggle("ativo");
+      card.classList.toggle("favorito");
+    });
+  });
+
+  grade.querySelectorAll(".tenho-orig").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      const chave = "orig|"+btn.dataset.orig;
+      toggleTenho(chave);
+      btn.classList.toggle("tenho");
+      btn.textContent = btn.classList.contains("tenho") ? "✓ Tenho" : "Tenho?";
+    });
+  });
+
+  grade.querySelectorAll(".insp-vazio").forEach(function(slot){
+    slot.addEventListener("click", function(){
+      const original = slot.dataset.original;
+      slot.outerHTML = '<div class="insp-add-form" data-original="'+original+'">'+
+        '<input class="add-nome" type="text" placeholder="Nome" maxlength="40">'+
+        '<input class="add-marca" type="text" placeholder="Fabricante" maxlength="30">'+
+        '<input class="add-url" type="text" placeholder="URL da imagem (opcional)">'+
+        '<div class="insp-add-btns">'+
+          '<button class="btn-add-ok">OK</button>'+
+          '<button class="btn-add-cancel">✕</button>'+
+        '</div></div>';
+
+      const form = grade.querySelector('.insp-add-form[data-original="'+original+'"]');
+      const nomeInput = form.querySelector(".add-nome");
+      const marcaInput = form.querySelector(".add-marca");
+      nomeInput.focus();
+
+      fmtInput(nomeInput, toTitleCase);
+      fmtInput(marcaInput, toAllCaps);
+
+      form.querySelector(".btn-add-ok").addEventListener("click", function(){
+        const nome = toTitleCase(nomeInput.value.trim());
+        const marca = toAllCaps(marcaInput.value.trim());
+        const url = form.querySelector(".add-url").value.trim();
+        if(!nome || !marca) return nomeInput.focus();
+        addCustom(original, nome, marca, url);
+        render(filtroAtivo);
+      });
+
+      form.querySelector(".btn-add-cancel").addEventListener("click", function(){
+        render(filtroAtivo);
+      });
+
+      nomeInput.addEventListener("keydown", function(e){
+        if(e.key==="Enter") marcaInput.focus();
+        if(e.key==="Escape") render(filtroAtivo);
+      });
+      marcaInput.addEventListener("keydown", function(e){
+        if(e.key==="Enter") form.querySelector(".add-url").focus();
+        if(e.key==="Escape") render(filtroAtivo);
+      });
+      form.querySelector(".add-url").addEventListener("keydown", function(e){
+        if(e.key==="Enter") form.querySelector(".btn-add-ok").click();
+        if(e.key==="Escape") render(filtroAtivo);
+      });
+    });
+  });
+
+  grade.querySelectorAll(".del-insp").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      deleteCustom(btn.dataset.original, parseInt(btn.dataset.idx));
+      render(filtroAtivo);
+    });
+  });
+
+  grade.querySelectorAll(".tenho-btn").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      const chave = btn.dataset.chave;
+      toggleTenho(chave);
+      btn.classList.toggle("tenho");
+      btn.textContent = btn.classList.contains("tenho") ? "✓ Tenho" : "Tenho?";
+    });
+  });
+}
+
+function montarFiltros(){
+  const todasMarcas = new Set();
+  getTodos().forEach(function(o){
+    (o.inspirados||[]).concat(getCustom(o.original)).forEach(function(x){ todasMarcas.add(x.marca); });
+  });
+  const marcas = ["todos", "favoritos"].concat(Array.from(todasMarcas));
+  filtros.innerHTML = marcas.map(function(m,idx){
+    const label = m==="todos"?"Todas" : m==="favoritos"?"★ Favoritos" : m;
+    return '<button class="'+(idx===0?'active':'')+'" data-m="'+m+'">'+label+'</button>';
+  }).join("");
+  filtros.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click",function(){
+      filtros.querySelectorAll("button").forEach(function(x){x.classList.remove("active");});
+      b.classList.add("active");
+      render(b.dataset.m);
+    });
+  });
+}
+
+/* ── modal novo perfume ── */
+(function(){
+  const overlay = document.getElementById("modalPerf");
+  const mpNome = document.getElementById("mp-nome");
+  const mpCasa = document.getElementById("mp-casa");
+  const mpFamilia = document.getElementById("mp-familia");
+  const mpSaida = document.getElementById("mp-saida");
+  const mpCorpo = document.getElementById("mp-corpo");
+  const mpFundo = document.getElementById("mp-fundo");
+  const mpFoto = document.getElementById("mp-foto");
+
+  fmtInput(mpNome, toTitleCase);
+  fmtInput(mpCasa, toAllCaps);
+  fmtInput(mpFamilia, toTitleCase);
+  fmtInput(mpSaida, toTitleCase);
+  fmtInput(mpCorpo, toTitleCase);
+  fmtInput(mpFundo, toTitleCase);
+
+  function abrirModal(){
+    [mpNome,mpCasa,mpFamilia,mpSaida,mpCorpo,mpFundo,mpFoto].forEach(function(i){i.value="";});
+    overlay.classList.remove("oculto");
+    mpNome.focus();
+  }
+  function fecharModal(){ overlay.classList.add("oculto"); }
+
+  document.getElementById("btnAddPerf").addEventListener("click", abrirModal);
+  document.getElementById("mp-cancel").addEventListener("click", fecharModal);
+  overlay.addEventListener("click", function(e){ if(e.target===overlay) fecharModal(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") fecharModal(); });
+
+  document.getElementById("mp-ok").addEventListener("click", function(){
+    const nome = toTitleCase(mpNome.value.trim());
+    const casa = toAllCaps(mpCasa.value.trim());
+    if(!nome || !casa) return mpNome.focus();
+    CUSTOM_PERF.push({
+      original: nome,
+      casa: casa,
+      familia: toTitleCase(mpFamilia.value.trim()) || "—",
+      foto: mpFoto.value.trim() ? "__url__"+mpFoto.value.trim() : "",
+      notas:{
+        saida: toTitleCase(mpSaida.value.trim()) || "—",
+        corpo: toTitleCase(mpCorpo.value.trim()) || "—",
+        fundo: toTitleCase(mpFundo.value.trim()) || "—"
+      },
+      inspirados: []
+    });
+    salvarCustomPerf();
+    fecharModal();
+    montarFiltros();
+    render(filtroAtivo);
+  });
+})();
+
+montarFiltros();
+render("todos");
+</script>
+</body>
+</html>
